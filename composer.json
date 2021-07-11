@@ -1,0 +1,26 @@
+{
+    "name": "rabble/menu-bundle",
+    "type": "symfony-bundle",
+    "description": "A bundle that allows adding content from the content bundle to a menu navigation.",
+    "keywords": ["rabble", "admin", "menu", "cms"],
+    "homepage": "https://rabble.rocks",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rachel Snijders",
+            "email": "rainbowvision.bn@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "rabble/content-bundle": "*"
+    },
+    "autoload": {
+        "psr-4": { "Rabble\\MenuBundle\\": "src/MenuBundle" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

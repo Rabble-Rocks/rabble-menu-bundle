@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="rabble_menu.content.default_field_types_listener" class="Rabble\MenuBundle\EventListener\DefaultFieldTypesSubscriber">
+            <argument type="service" id="rabble_menu.menu_manager"/>
+            <argument type="service" id="translator.default"/>
+            <tag name="kernel.event_subscriber" />
+        </service>
+        <service id="rabble_content.form_ui.tab.menu" class="Rabble\ContentBundle\UI\Tab\ContentTab">
+            <argument type="service" id="translator.default" />
+            <argument type="collection">
+                <argument key="contentTemplate">@RabbleContent/Content/Tab/default.html.twig</argument>
+                <argument key="component">menu</argument>
+                <argument key="label">content.tabs.menu</argument>
+                <argument key="translation_domain">RabbleMenuBundle</argument>
+            </argument>
+            <tag name="rabble_content.form_ui.tab" priority="16" />
+        </service>
+    </services>
+</container>
