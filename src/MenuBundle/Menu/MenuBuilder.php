@@ -14,6 +14,7 @@ class MenuBuilder
     private ItemFetcherInterface $itemFetcher;
     private RequestStack $requestStack;
     private string $menuName;
+    private ItemInterface $cached;
 
     public function __construct(
         FactoryInterface $factory,
@@ -29,6 +30,9 @@ class MenuBuilder
 
     public function build(): ItemInterface
     {
+        if (isset($this->cached)) {
+            return $this->cached;
+        }
         $request = $this->requestStack->getCurrentRequest();
         $menu = $this->factory->createItem('root');
         if (null === $request) {
@@ -39,7 +43,7 @@ class MenuBuilder
             $this->addItem($menuItem, $menu);
         }
 
-        return $menu;
+        return $this->cached = $menu;
     }
 
     private function addItem(MenuItem $menuItem, ItemInterface $compiledItem): void
