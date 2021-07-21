@@ -48,10 +48,25 @@ class MenuBuilder
 
     private function addItem(MenuItem $menuItem, ItemInterface $compiledItem): void
     {
+        $parentItem = $compiledItem->getParent();
+        while (null !== $parentItem) {
+            $routes = $parentItem->getExtra('routes');
+            if (null === $routes) {
+                $parentItem = $parentItem->getParent();
+
+                continue;
+            }
+            $routes[] = $menuItem->getId();
+            $parentItem->setExtra('routes', $routes);
+            $parentItem = $parentItem->getParent();
+        }
         $child = $compiledItem->addChild($menuItem->getLabel(), [
             'uri' => $menuItem->getUri(),
             'linkAttributes' => null === $menuItem->getTarget() ? [] : ['target' => $menuItem->getTarget()],
             'label' => $menuItem->getLabel(),
+            'extras' => [
+                'routes' => [$menuItem->getId()],
+            ],
         ]);
         foreach ($menuItem->getChildren() as $childItem) {
             $this->addItem($childItem, $child);
